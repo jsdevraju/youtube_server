@@ -1,9 +1,10 @@
 // import all lib
-import express from "express";
+import express, { Request, Response} from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import { config } from "dotenv";
+import errorHandler from './middleware/error'
 
 // Environment Variable Configuration
 config();
@@ -22,8 +23,17 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 
+// test route
+app.get("/", (req:Request, res:Response) => {
+  res.send("Hello Api Working")
+})
+
 // Routes
+import auth from './routes/auth';
+app.use("/api/v1", auth);
+
 
 // Middleware Error Handler
+app.use(errorHandler)
 
 export default app;
