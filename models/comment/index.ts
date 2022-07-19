@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const userSchema = new mongoose.Schema(
+export const commentSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
@@ -18,4 +18,4 @@ export const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model("Comment", commentSchema);

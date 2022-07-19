@@ -30,7 +30,14 @@ app.get("/", (req:Request, res:Response) => {
 
 // Routes
 import auth from './routes/auth';
-app.use("/api/v1", auth);
+import comment from './routes/comment';
+import video from './routes/video';
+import user from './routes/user';
+// Routes Middleware
+app.use("/api/v1/auth", auth);
+app.use("/api/v1/comment", comment);
+app.use("/api/v1/video", video);
+app.use("/api/v1/user", user);
 
 
 // Middleware Error Handler
