@@ -17,6 +17,10 @@ export const userSchema = new mongoose.Schema(
     subscribedUsers: {
       type: [String],
     },
+    formGoogle:{
+      type:Boolean,
+      default:false
+    },
     role: {
       type: String,
       default: "user",

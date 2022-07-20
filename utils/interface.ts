@@ -14,6 +14,7 @@ export interface IUser extends Document {
   updatedAt: string;
   _doc: object;
   __v: string;
+  formGoogle:boolean
 }
 
 export interface IReqAuth extends Request {

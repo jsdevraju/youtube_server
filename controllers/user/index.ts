@@ -1,7 +1,7 @@
 import catchAsyncError from "../../middleware/catchAsyncError";
 import { Request, Response, NextFunction } from "express";
 import ErrorHandler from "../../utils/errorHandler";
-import { IReqAuth } from "../../utils/interface";
+import { IReqAuth, IUser } from "../../utils/interface";
 import User from "../../models/user";
 import Video from '../../models/video'
 
@@ -47,9 +47,11 @@ export const getUser = catchAsyncError(
     const user =  await User.findById(req.params.id);
     if(!user) return next(new ErrorHandler("User not found", 404)) 
 
+    const { password, ...otherInfo } = user._doc as IUser;
+
     res.status(200).json({
         message:"tru",
-        user
+        user:otherInfo
     })
   }
 );
