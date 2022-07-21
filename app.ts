@@ -16,7 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://razuislam.youtube.vercle.app"],
+    origin: ["http://localhost:3000", "https://youtube-client-alpha.vercel.app"],
   })
 );
 app.use(morgan("dev"));
