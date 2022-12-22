@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const user_1 = require("../../controllers/user");
+const video_1 = require("../../controllers/video");
+const auth_1 = require("../../middleware/auth");
+const router = (0, express_1.Router)();
+router.post("/create", auth_1.isAuthenticated, video_1.addVideo);
+router.put("/:id", auth_1.isAuthenticated, user_1.updateUser);
+router.delete("/:id", auth_1.isAuthenticated, video_1.deleteVideo);
+router.get("/find/:id", video_1.getVideo);
+router.get("/view/:id", video_1.addView);
+router.get("/trend", video_1.trend);
+router.get("/random", video_1.random);
+router.get("/sub", auth_1.isAuthenticated, video_1.sub);
+router.get("/tags", video_1.getByTag);
+router.get("/search", video_1.search);
+exports.default = router;
