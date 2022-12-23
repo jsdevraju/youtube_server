@@ -7,8 +7,8 @@ import {
   subscribe,
   unsubscribe,
   updateUser,
-} from "../../controllers/user";
-import { isAuthenticated } from "../../middleware/auth";
+} from "../../controllers/user/index.js";
+import { isAuthenticated } from "../../middleware/auth.js";
 
 const router = Router();
 // When User try to update her/she own information fire this function

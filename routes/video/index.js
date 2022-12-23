@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { updateUser } from "../../controllers/user";
+import { updateUser } from "../../controllers/user/index.js";
 import {
   addVideo,
   addView,
@@ -10,8 +10,8 @@ import {
   trend,
   getByTag,
   search,
-} from "../../controllers/video";
-import { isAuthenticated } from "../../middleware/auth";
+} from "../../controllers/video/index.js";
+import { isAuthenticated } from "../../middleware/auth.js";
 
 const router = Router();
 

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { register, login, google, logout } from "../../controllers/auth";
+import { register, login, google, logout } from "../../controllers/auth/index.js";
 import Joi from 'joi';
 import { createValidator } from 'express-joi-validation'
-import { isAuthenticated } from "../../middleware/auth";
+import { isAuthenticated } from "../../middleware/auth.js";
 
 const router = Router();
 const validator = createValidator({});

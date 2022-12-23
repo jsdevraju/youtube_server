@@ -1,14 +1,12 @@
-import catchAsyncError from "../../middleware/catchAsyncError";
-import { Request, Response, NextFunction } from "express";
-import ErrorHandler from "../../utils/errorHandler";
+import catchAsyncError from "../../middleware/catchAsyncError.js";
+import ErrorHandler from "../../utils/errorHandler.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../../models/user";
-import { IUser } from "../../utils/interface";
+import User from "../../models/user/index.js";
 
 // When User try to register our app fire this function
 export const register = catchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     const salt = await bcrypt.genSalt(12);
     const hash = await bcrypt.hash(req.body.password, salt);
     const newUser = new User({ ...req.body, password: hash });
@@ -21,7 +19,7 @@ export const register = catchAsyncError(
 );
 // When User try to login our app fire this function
 export const login = catchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     const user = await User.findOne({ name: req.body.name });
     // if not any user exits in out db
     if (!user) return next(new ErrorHandler("User not found", 404));
@@ -36,7 +34,7 @@ export const login = catchAsyncError(
     });
 
     // Minimize Password
-    const { password, ...otherInfo } = user._doc as IUser;
+    const { password, ...otherInfo } = user._doc
 
     // store cookie and send response
     res
@@ -53,7 +51,7 @@ export const login = catchAsyncError(
 );
 // When User try to google our app fire this function
 export const google = catchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
       // Generate Token
@@ -61,7 +59,7 @@ export const google = catchAsyncError(
         expiresIn: "1d",
       });
 
-      const userDoc = user._doc as IUser;
+      const userDoc = user._doc
 
       // store cookie and send response
       res
@@ -90,7 +88,7 @@ export const google = catchAsyncError(
         }
       );
 
-      const userDoc = saveUser._doc as IUser;
+      const userDoc = saveUser._doc
 
       // store cookie and send response
       res
@@ -108,7 +106,7 @@ export const google = catchAsyncError(
 );
 // When User try to logout our app fire this function
 export const logout = catchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     res
       .clearCookie("token", {
         expires: new Date(Date.now()),

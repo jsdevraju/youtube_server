@@ -1,13 +1,11 @@
-import catchAsyncError from "../../middleware/catchAsyncError";
-import { Request, Response, NextFunction } from "express";
-import ErrorHandler from "../../utils/errorHandler";
-import { IReqAuth, IUser } from "../../utils/interface";
-import User from "../../models/user";
-import Video from '../../models/video'
+import catchAsyncError from "../../middleware/catchAsyncError.js";
+import ErrorHandler from "../../utils/errorHandler.js";
+import User from "../../models/user/index.js";
+import Video from '../../models/video/index.js'
 
 // When User try to update her/she own information fire this function
 export const updateUser = catchAsyncError(
-  async (req: IReqAuth, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     // If no user exits
     if (!req.user) return;
     // if user id match then update the user
@@ -19,7 +17,7 @@ export const updateUser = catchAsyncError(
         },
         { new: true }
       );
-    //   Response Data
+    //  Data
       res.status(200).json({
         message: "Update Successfully",
         update,
@@ -29,7 +27,7 @@ export const updateUser = catchAsyncError(
 );
 // When User try to delete her/she own account fire this function
 export const deleteUser = catchAsyncError(
-  async (req: IReqAuth, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     // If no user exits
     if (!req.user) return;
     // if user id match then delete the user
@@ -43,11 +41,11 @@ export const deleteUser = catchAsyncError(
 );
 // When User try to getUser fire this function
 export const getUser = catchAsyncError(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     const user =  await User.findById(req.params.id);
     if(!user) return next(new ErrorHandler("User not found", 404)) 
 
-    const { password, ...otherInfo } = user._doc as IUser;
+    const { password, ...otherInfo } = user._doc
 
     res.status(200).json({
         message:"tru",
@@ -57,7 +55,7 @@ export const getUser = catchAsyncError(
 );
 // When User try to subscribe fire this function
 export const subscribe = catchAsyncError(
-  async (req: IReqAuth, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     if(!req.user) return;
     //If user req add subscribedUsers array
     await User.findByIdAndUpdate(req.user.id, {
@@ -75,7 +73,7 @@ export const subscribe = catchAsyncError(
 );
 // When User try to unsubscribe fire this function
 export const unsubscribe = catchAsyncError(
-  async (req: IReqAuth, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     if(!req.user) return;
     //If user req add subscribedUsers array
     await User.findByIdAndUpdate(req.user.id, {
@@ -93,7 +91,7 @@ export const unsubscribe = catchAsyncError(
 );
 // When User try to like fire this function
 export const like = catchAsyncError(
-  async (req: IReqAuth, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     if(!req.user) return;
     const id = req.user._id;
     const videoId = req.params.id;
@@ -108,7 +106,7 @@ export const like = catchAsyncError(
 );
 // When User try to dislike fire this function
 export const disLike = catchAsyncError(
-  async (req: IReqAuth, res: Response, next: NextFunction) => {
+  async (req, res, next) => {
     if(!req.user) return;
     const id = req.user._id;
     const videoId = req.params.id;
